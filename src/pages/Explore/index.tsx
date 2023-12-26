@@ -187,7 +187,7 @@ const Explore = ({ initialTab }: { initialTab?: ExploreTab }) => {
               placement="bottom"
             >
               <ThemedText.LargeHeader>
-                <Trans>Top tokens on Uniswap</Trans>
+                <Trans>Top Tokens</Trans>
               </ThemedText.LargeHeader>
             </MouseoverTooltip>
           </TitleContainer>

@@ -458,7 +458,7 @@ export default function Landing() {
             <LearnMoreArrow />
           </LearnMoreContainer>
 
-          <DownloadWalletLink
+          {/* <DownloadWalletLink
             {...getDownloadAppLinkProps({
               // landing page specific tracking params
               microSiteParams: `utm_source=home_page&utm_medium=webapp&utm_campaign=wallet_microsite&utm_id=1`,
@@ -467,7 +467,7 @@ export default function Landing() {
           >
             <AppleLogo width="20" height="20" />
             Download the Uniswap Wallet for iOS
-          </DownloadWalletLink>
+          </DownloadWalletLink> */}
         </ContentContainer>
         <AboutContentContainer isDarkMode={isDarkMode}>
           <CardGrid cols={cards.length} ref={cardsRef}>
@@ -479,13 +479,13 @@ export default function Landing() {
               />
             ))}
           </CardGrid>
-          <CardGrid cols={extraCards.length}>
+          {/* <CardGrid cols={extraCards.length}>
             {extraCards.map(({ darkIcon, lightIcon, ...card }) => (
               <Card {...card} icon={isDarkMode ? darkIcon : lightIcon} key={card.title} type={CardType.Secondary} />
             ))}
-          </CardGrid>
-          <ProtocolBanner />
-          <AboutFooter />
+          </CardGrid> */}
+          {/* <ProtocolBanner /> */}
+          {/* <AboutFooter /> */}
         </AboutContentContainer>
       </PageContainer>
     </Trace>

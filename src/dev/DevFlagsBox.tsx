@@ -77,7 +77,7 @@ export default function DevFlagsBox() {
   const toggleOpen = () => setIsOpen((open) => !open)
 
   return (
-    <Box>
+    <Box style={{display:"none"}}>
       <TopBar onClick={toggleOpen}>
         {isOpen ? '😺👇' : '😿☝️'}
         {isOpen && (
