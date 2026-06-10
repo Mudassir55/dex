@@ -24,7 +24,17 @@ const compareFloats = (a?: number, b?: number): 1 | -1 => {
   return Math.round(a * 100000) >= Math.round(b * 100000) ? 1 : -1
 }
 
-const CollectionTable = ({ data, timePeriod }: { data: CollectionTableColumn[]; timePeriod: TimePeriod }) => {
+const CollectionTable = ({
+  data,
+  timePeriod,
+  isLoading,
+  errorMessage,
+}: {
+  data: CollectionTableColumn[]
+  timePeriod: TimePeriod
+  isLoading: boolean
+  errorMessage?: string
+}) => {
   const floorSort = useMemo(() => {
     return (rowA: Row<CollectionTableColumn>, rowB: Row<CollectionTableColumn>) => {
       return compareFloats(rowA.original.floor.value, rowB.original.floor.value)
@@ -166,7 +176,7 @@ const CollectionTable = ({ data, timePeriod }: { data: CollectionTableColumn[]; 
           ColumnHeaders.Owners,
         ]}
         largeHiddenColumns={[ColumnHeaders.Items, ColumnHeaders.Owners]}
-        {...{ data, columns }}
+        {...{ data, columns, isLoading, errorMessage }}
       />
     </>
   )

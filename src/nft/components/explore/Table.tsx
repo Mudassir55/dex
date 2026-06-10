@@ -90,6 +90,8 @@ const DEFAULT_TRENDING_TABLE_QUERY_AMOUNT = 10
 interface TableProps<D extends Record<string, unknown>> {
   columns: Column<CollectionTableColumn>[]
   data: CollectionTableColumn[]
+  isLoading: boolean
+  errorMessage?: string
   smallHiddenColumns: IdType<D>[]
   mediumHiddenColumns: IdType<D>[]
   largeHiddenColumns: IdType<D>[]
@@ -97,6 +99,8 @@ interface TableProps<D extends Record<string, unknown>> {
 export function Table<D extends Record<string, unknown>>({
   columns,
   data,
+  isLoading,
+  errorMessage,
   smallHiddenColumns,
   mediumHiddenColumns,
   largeHiddenColumns,
@@ -141,8 +145,44 @@ export function Table<D extends Record<string, unknown>>({
     }
   }, [width, setHiddenColumns, columns, smallHiddenColumns, mediumHiddenColumns, largeHiddenColumns, theme.breakpoint])
 
-  if (data.length === 0) {
+  if (isLoading) {
     return <LoadingTable headerGroups={headerGroups} visibleColumns={visibleColumns} {...getTableProps()} />
+  }
+
+  if (data.length === 0) {
+    return (
+      <table {...getTableProps()} className={styles.table}>
+        <thead className={styles.thead}>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+              {headerGroup.headers.map((column, index) => (
+                <StyledHeader
+                  className={styles.th}
+                  {...column.getHeaderProps()}
+                  style={{
+                    textAlign: index === 0 ? 'left' : 'right',
+                    paddingLeft: index === 0 ? (isMobile ? '16px' : '52px') : 0,
+                  }}
+                  disabled
+                  key={index}
+                >
+                  {column.render('Header')}
+                </StyledHeader>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          <tr>
+            <td className={styles.td} colSpan={visibleColumns.length} style={{ height: '96px', textAlign: 'center' }}>
+              <ThemedText.BodySecondary>
+                {errorMessage ?? 'No trending NFT collections are currently available.'}
+              </ThemedText.BodySecondary>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    )
   }
 
   return (
@@ -190,7 +230,10 @@ export function Table<D extends Record<string, unknown>>({
             <TraceEvent
               events={[BrowserEvent.onClick]}
               name={NFTEventName.NFT_TRENDING_ROW_SELECTED}
-              properties={{ collection_address: row.original.collection.address, chain_id: chainId }}
+              properties={{
+                collection_address: row.original.collection.address,
+                chain_id: chainId,
+              }}
               element={InterfaceElementName.NFT_TRENDING_ROW}
               key={i}
             >

@@ -106,18 +106,15 @@ export const routes: RouteDefinition[] = [
     path: '/explore',
     nestedPaths: [':tab', ':chainName'],
     getElement: () => <RedirectExplore />,
-    enabled: (args) => Boolean(args.infoExplorePageEnabled),
   }),
   createRouteDefinition({
     path: '/explore',
     nestedPaths: [':tab/:chainName'],
     getElement: () => <Explore />,
-    enabled: (args) => Boolean(args.infoExplorePageEnabled),
   }),
   createRouteDefinition({
     path: '/explore/tokens/:chainName/:tokenAddress',
     getElement: () => <TokenDetails />,
-    enabled: (args) => Boolean(args.infoExplorePageEnabled),
   }),
   createRouteDefinition({
     path: '/tokens',

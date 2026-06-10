@@ -90,7 +90,7 @@ const TRENDING_COLLECTION_SIZE = 5
 const Banner = () => {
   const navigate = useNavigate()
 
-  const { data: trendingCollections } = useTrendingCollections(
+  const { data: trendingCollections, loading } = useTrendingCollections(
     TRENDING_COLLECTION_SIZE + EXCLUDED_COLLECTIONS.length,
     HistoryDuration.Day
   )
@@ -117,7 +117,7 @@ const Banner = () => {
           Better prices. <br />
           More listings.
         </HeaderContainer>
-        {collections ? (
+        {collections?.length ? (
           <Carousel activeIndex={activeCollectionIdx} toggleNextSlide={onToggleNextSlide}>
             {collections.map((collection) => (
               <CarouselCard
@@ -127,11 +127,11 @@ const Banner = () => {
               />
             ))}
           </Carousel>
-        ) : (
+        ) : loading ? (
           <LoadingCarousel>
             <LoadingCarouselCard />
           </LoadingCarousel>
-        )}
+        ) : null}
       </BannerMainArea>
     </BannerContainer>
   )

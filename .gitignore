@@ -55,3 +55,7 @@ cypress/screenshots
 .vercel
 
 .wrangler
+
+# environment secrets
+.env
+.env.production

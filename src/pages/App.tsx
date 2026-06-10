@@ -10,7 +10,7 @@ import { useUniswapXDefaultEnabled } from 'featureFlags/flags/uniswapXDefault'
 import { useAtom } from 'jotai'
 import { useBag } from 'nft/hooks/useBag'
 import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useState } from 'react'
-import { Navigate, Route, Routes, useLocation, useSearchParams } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { shouldDisableNFTRoutesAtom } from 'state/application/atoms'
 import { useAppSelector } from 'state/hooks'
 import { AppState } from 'state/reducer'
@@ -111,14 +111,9 @@ export default function App() {
     setScrollY(0)
   }, [pathname])
 
-  const [searchParams] = useSearchParams()
   useEffect(() => {
-    if (searchParams.get('disableNFTs') === 'true') {
-      setShouldDisableNFTRoutes(true)
-    } else if (searchParams.get('disableNFTs') === 'false') {
-      setShouldDisableNFTRoutes(false)
-    }
-  }, [searchParams, setShouldDisableNFTRoutes])
+    setShouldDisableNFTRoutes(true)
+  }, [setShouldDisableNFTRoutes])
 
   useEffect(() => {
     const scrollListener = () => {

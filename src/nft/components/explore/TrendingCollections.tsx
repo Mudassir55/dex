@@ -87,10 +87,11 @@ const TrendingCollections = () => {
   const [timePeriod, setTimePeriod] = useState<TimePeriod>(TimePeriod.OneDay)
   const [isEthToggled, setEthToggled] = useState(true)
 
-  const { data: trendingCollections, loading: trendingCollectionsAreLoading } = useTrendingCollections(
-    100,
-    convertTimePeriodToHistoryDuration(timePeriod)
-  )
+  const {
+    data: trendingCollections,
+    loading: trendingCollectionsAreLoading,
+    error: trendingCollectionsError,
+  } = useTrendingCollections(100, convertTimePeriodToHistoryDuration(timePeriod))
 
   const ethUsdPrice = useNativeUsdPrice()
 
@@ -156,7 +157,12 @@ const TrendingCollections = () => {
           </Selector>
         </Filter>
       </FiltersRow>
-      <CollectionTable data={trendingCollectionColumns} timePeriod={timePeriod} />
+      <CollectionTable
+        data={trendingCollectionColumns}
+        timePeriod={timePeriod}
+        isLoading={trendingCollectionsAreLoading}
+        errorMessage={trendingCollectionsError ? 'Unable to load NFT collections. Please try again later.' : undefined}
+      />
     </ExploreContainer>
   )
 }
