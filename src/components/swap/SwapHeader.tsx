@@ -6,7 +6,6 @@ import { ThemedText } from 'theme/components'
 
 import { RowBetween, RowFixed } from '../Row'
 import SettingsTab from '../Settings'
-import SwapBuyFiatButton from './SwapBuyFiatButton'
 
 const StyledSwapHeader = styled(RowBetween)`
   margin-bottom: 10px;
