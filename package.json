@@ -79,6 +79,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.22.7",
     "@cloudflare/workers-types": "^4.20230710.1",
     "@craco/craco": "^7.1.0",
@@ -242,6 +243,7 @@
     "cids": "^1.0.0",
     "clsx": "^1.1.1",
     "copy-to-clipboard": "^3.2.0",
+    "crypto-browserify": "^3.12.1",
     "d3": "^7.6.1",
     "ethers": "^5.7.2",
     "ext-name": "^5.0.0",
@@ -288,6 +290,7 @@
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0",
     "statsig-react": "^1.22.0",
+    "stream-browserify": "^3.0.0",
     "styled-components": "^5.3.5",
     "tiny-invariant": "^1.2.0",
     "ua-parser-js": "^1.0.35",
