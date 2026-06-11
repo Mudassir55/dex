@@ -41,7 +41,7 @@ const Gradient = styled.div<{ isDarkMode: boolean }>`
   bottom: 0;
   width: 100%;
   min-height: 550px;
-  ${({ isDarkMode }) =>
+  ${{ isDarkMode }} =>
     isDarkMode
       ? css`
           background: linear-gradient(rgba(8, 10, 24, 0) 0%, rgb(8 10 24 / 100%) 45%);
@@ -126,7 +126,7 @@ const TitleText = styled.h1<{ isDarkMode: boolean; $visible: boolean }>`
   font-weight: 535;
   text-align: center;
   margin: 0 0 24px;
-  ${({ isDarkMode }) =>
+  ${{ isDarkMode }} =>
     isDarkMode
       ? css`
           background: linear-gradient(20deg, rgba(255, 244, 207, 1) 10%, rgba(255, 87, 218, 1) 100%);
@@ -137,7 +137,7 @@ const TitleText = styled.h1<{ isDarkMode: boolean; $visible: boolean }>`
   background-clip: text;
   -webkit-background-clip: text;
 
-  ${({ $visible }) =>
+  ${{ $visible }} =>
     $visible
       ? css`
           ${textFadeIn}
@@ -174,7 +174,7 @@ const SubTextContainer = styled.div<{ $visible: boolean }>`
   display: flex;
   justify-content: center;
 
-  ${({ $visible }) =>
+  ${{ $visible }} =>
     $visible
       ? css`
           ${textFadeIn}
@@ -247,7 +247,7 @@ const AboutContentContainer = styled.div<{ isDarkMode: boolean }>`
   align-items: center;
   padding: 0 24px 5rem;
   width: 100%;
-  ${({ isDarkMode }) =>
+  ${{ isDarkMode }} =>
     isDarkMode
       ? css`
           background: linear-gradient(179.82deg, rgba(0, 0, 0, 0) 0.16%, #050026 99.85%);
@@ -270,7 +270,6 @@ const CardGrid = styled.div<{ cols: number }>`
 
   grid-template-columns: 1fr;
   @media screen and (min-width: ${BREAKPOINTS.sm}px) {
-    // At this screen size, we show up to 2 columns.
     grid-template-columns: ${({ cols }) =>
       Array.from(Array(cols === 2 ? 2 : 1))
         .map(() => '1fr')
@@ -279,7 +278,6 @@ const CardGrid = styled.div<{ cols: number }>`
   }
 
   @media screen and (min-width: ${BREAKPOINTS.lg}px) {
-    // at this screen size, always show the max number of columns
     grid-template-columns: ${({ cols }) =>
       Array.from(Array(cols))
         .map(() => '1fr')
@@ -453,35 +451,17 @@ export default function Landing() {
             <Trans>Learn more</Trans>
             <LearnMoreArrow />
           </LearnMoreContainer>
-
-          {/* <DownloadWalletLink
-            {...getDownloadAppLinkProps({
-              // landing page specific tracking params
-              microSiteParams: `utm_source=home_page&utm_medium=webapp&utm_campaign=wallet_microsite&utm_id=1`,
-              appStoreParams: `ct=Uniswap-Home-Page&mt=8`,
-            })}
-          >
-            <AppleLogo width="20" height="20" />
-            Download the Uniswap Wallet for iOS
-          </DownloadWalletLink> */}
         </ContentContainer>
         <AboutContentContainer isDarkMode={isDarkMode}>
           <CardGrid cols={cards.length} ref={cardsRef}>
-            {cards.map(({ darkBackgroundImgSrc, lightBackgroundImgSrc, ...card }) => (
+            {cards.map(({ darkBackgroundImgSrc, lightBackgroundImgSrc, ...cardDetails }) => (
               <Card
-                {...card}
+                {...cardDetails}
                 backgroundImgSrc={isDarkMode ? darkBackgroundImgSrc : lightBackgroundImgSrc}
-                key={card.title}
+                key={cardDetails.title}
               />
             ))}
           </CardGrid>
-          {/* <CardGrid cols={extraCards.length}>
-            {extraCards.map(({ darkIcon, lightIcon, ...card }) => (
-              <Card {...card} icon={isDarkMode ? darkIcon : lightIcon} key={card.title} type={CardType.Secondary} />
-            ))}
-          </CardGrid> */}
-          {/* <ProtocolBanner /> */}
-          {/* <AboutFooter /> */}
         </AboutContentContainer>
       </PageContainer>
     </Trace>
