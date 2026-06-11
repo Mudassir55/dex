@@ -8,7 +8,18 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const { IgnorePlugin, ProvidePlugin } = require('webpack')
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin')
 
-const commitHash = execSync('git rev-parse HEAD').toString().trim()
+function getCommitHash() {
+  if (process.env.VERCEL_GIT_COMMIT_SHA) return process.env.VERCEL_GIT_COMMIT_SHA
+  if (process.env.GITHUB_SHA) return process.env.GITHUB_SHA
+
+  try {
+    return execSync('git rev-parse HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()
+  } catch {
+    return 'unknown'
+  }
+}
+
+const commitHash = getCommitHash()
 const isProduction = process.env.NODE_ENV === 'production'
 
 process.env.REACT_APP_GIT_COMMIT_HASH = commitHash
