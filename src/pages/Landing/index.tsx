@@ -41,13 +41,13 @@ const Gradient = styled.div<{ isDarkMode: boolean }>`
   bottom: 0;
   width: 100%;
   min-height: 550px;
-  ${{ isDarkMode }} =>
+  ${({ isDarkMode }) =>
     isDarkMode
       ? css`
           background: linear-gradient(rgba(8, 10, 24, 0) 0%, rgb(8 10 24 / 100%) 45%);
         `
       : css`
-          background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255 255 255 /100%) 45%);
+          background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255 255 255 / 100%) 45%);
         `};
   z-index: ${Z_INDEX.under_dropdown};
   pointer-events: none;
@@ -126,7 +126,7 @@ const TitleText = styled.h1<{ isDarkMode: boolean; $visible: boolean }>`
   font-weight: 535;
   text-align: center;
   margin: 0 0 24px;
-  ${{ isDarkMode }} =>
+  ${({ isDarkMode }) =>
     isDarkMode
       ? css`
           background: linear-gradient(20deg, rgba(255, 244, 207, 1) 10%, rgba(255, 87, 218, 1) 100%);
@@ -137,7 +137,7 @@ const TitleText = styled.h1<{ isDarkMode: boolean; $visible: boolean }>`
   background-clip: text;
   -webkit-background-clip: text;
 
-  ${{ $visible }} =>
+  ${({ $visible }) =>
     $visible
       ? css`
           ${textFadeIn}
@@ -174,7 +174,7 @@ const SubTextContainer = styled.div<{ $visible: boolean }>`
   display: flex;
   justify-content: center;
 
-  ${{ $visible }} =>
+  ${({ $visible }) =>
     $visible
       ? css`
           ${textFadeIn}
@@ -247,7 +247,7 @@ const AboutContentContainer = styled.div<{ isDarkMode: boolean }>`
   align-items: center;
   padding: 0 24px 5rem;
   width: 100%;
-  ${{ isDarkMode }} =>
+  ${({ isDarkMode }) =>
     isDarkMode
       ? css`
           background: linear-gradient(179.82deg, rgba(0, 0, 0, 0) 0.16%, #050026 99.85%);
