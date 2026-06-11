@@ -29,7 +29,13 @@ const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
 `
-const Gate = (flagName: FeatureFlag, featureFlagSettings: Record<string, string>) => {
+
+interface GateProps {
+  flagName: FeatureFlag
+  featureFlagSettings: Record<string, string>
+}
+
+function Gate({ flagName, featureFlagSettings }: GateProps) {
   const gateResult = useGate(flagName)
   if (gateResult) {
     const { value: statsigValue }: { value: boolean } = gateResult
@@ -46,7 +52,12 @@ const Gate = (flagName: FeatureFlag, featureFlagSettings: Record<string, string>
   return null
 }
 
-const Config = (name: DynamicConfigName, savedSettings: Record<string, any>) => {
+interface ConfigProps {
+  name: DynamicConfigName
+  savedSettings: Record<string, any>
+}
+
+function Config({ name, savedSettings }: ConfigProps) {
   const statsigConfig = useDynamicConfig(name)
   if (statsigConfig) {
     const statsigValue = statsigConfig.getValue()
@@ -68,8 +79,17 @@ export default function DevFlagsBox() {
   const dynamicConfigsAtom = useAtomValue(dynamicConfigSettingsAtom)
   const dynamicConfigs = useMemo(() => Object.values(DynamicConfigName), [])
 
-  const overrides = featureFlags.map((flagName) => Gate(flagName, featureFlagsAtom))
-  dynamicConfigs.forEach((configName) => overrides.push(Config(configName, dynamicConfigsAtom)))
+  const overrides = useMemo(() => {
+    const list: Array<React.ReactNode> = featureFlags.map((flagName) => (
+      <Gate key={flagName} flagName={flagName} featureFlagSettings={featureFlagsAtom} />
+    ))
+
+    dynamicConfigs.forEach((configName) => {
+      list.push(<Config key={configName} name={configName} savedSettings={dynamicConfigsAtom} />)
+    })
+
+    return list
+  }, [featureFlags, featureFlagsAtom, dynamicConfigs, dynamicConfigsAtom])
 
   const hasOverrides = overrides.some((g) => g !== null)
 
@@ -87,7 +107,7 @@ export default function DevFlagsBox() {
           </ThemedText.SubHeader>
         )}
       </TopBar>
-      {isOpen && (hasOverrides ? overrides : <ThemedText.LabelSmall>No overrides</ThemedText.LabelSmall>)}
+      {isOpen && (hasOverrides ? <>{overrides}</> : <ThemedText.LabelSmall>No overrides</ThemedText.LabelSmall>)}
     </Box>
   )
 }
