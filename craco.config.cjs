@@ -142,19 +142,22 @@ module.exports = {
       })
 
       // Retain source maps for node_modules packages:
-      webpackConfig.module.rules[0] = {
-        ...webpackConfig.module.rules[0],
-        exclude: /node_modules/,
-      }
+      const sourceMapRule = webpackConfig.module.rules.find(
+        (rule) => rule.enforce === 'pre' && rule.loader?.match(/source-map-loader/)
+      )
+      if (sourceMapRule) sourceMapRule.exclude = /node_modules/
 
       // Configure webpack transpilation (create-react-app specifies transpilation rules in a oneOf):
-      webpackConfig.module.rules[1].oneOf = webpackConfig.module.rules[1].oneOf.map((rule) => {
-        if (rule.loader && rule.loader.match(/babel-loader/)) {
-          rule.loader = 'swc-loader'
-          delete rule.options
-        }
-        return rule
-      })
+      const oneOfRule = webpackConfig.module.rules.find((rule) => Array.isArray(rule.oneOf))
+      if (oneOfRule) {
+        oneOfRule.oneOf = oneOfRule.oneOf.map((rule) => {
+          if (rule.loader && rule.loader.match(/babel-loader/)) {
+            rule.loader = 'swc-loader'
+            delete rule.options
+          }
+          return rule
+        })
+      }
 
       // Run terser compression on node_modules before tree-shaking, so that tree-shaking is more effective.
       // This works by eliminating dead code, so that webpack can identify unused imports and tree-shake them;
