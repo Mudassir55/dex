@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { BrowserEvent, InterfaceElementName, InterfacePageName, SharedEventName } from '@uniswap/analytics-events'
 import { Trace, TraceEvent } from 'analytics'
-import Card from 'components/Card'
-import { MAIN_CARDS, MORE_CARDS } from 'components/About/constants'
+import Card from 'components/About/Card'
+import { MAIN_CARDS } from 'components/About/constants'
 import { useAccountDrawer } from 'components/AccountDrawer'
 import { BaseButton } from 'components/Button'
 import { useDisableNFTRoutes } from 'hooks/useDisableNFTRoutes'
@@ -100,22 +100,6 @@ const ContentContainer = styled.div<{ isDarkMode: boolean }>`
   pointer-events: none;
   * {
     pointer-events: auto;
-  }
-`
-
-const DownloadWalletLink = styled.a`
-  display: inline-flex;
-  gap: 8px;
-  margin-top: 24px;
-  color: ${({ theme }) => theme.neutral2};
-  text-decoration: none;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 535;
-  text-align: center;
-
-  :hover {
-    color: ${({ theme }) => theme.neutral3};
   }
 `
 
@@ -346,20 +330,6 @@ export default function Landing() {
     return mainCards
   }, [originCountry, renderUkSpecificText, shouldDisableNFTRoutes])
 
-  const extraCards = useMemo(
-    () =>
-      MORE_CARDS.filter(
-        (card) =>
-          !(
-            card.to.startsWith(
-              'https://support.uniswap.org/hc/en-us/articles/11306574799117-How-to-use-Moon-Pay-on-the-Uniswap-web-app-'
-            ) &&
-            (!originCountry || renderUkSpecificText)
-          )
-      ),
-    [originCountry, renderUkSpecificText]
-  )
-
   const [accountDrawerOpen] = useAccountDrawer()
   const navigate = useNavigate()
   useEffect(() => {
@@ -376,8 +346,8 @@ export default function Landing() {
   const titles = useMemo(() => {
     if (!originCountry) {
       return {
-        header: null,
-        subHeader: null,
+        header: <Trans>Trade crypto with confidence</Trans>,
+        subHeader: <Trans>Buy, sell, and explore tokens</Trans>,
       }
     }
 
@@ -424,10 +394,10 @@ export default function Landing() {
           <Glow />
         </GlowContainer>
         <ContentContainer isDarkMode={isDarkMode}>
-          <TitleText isDarkMode={isDarkMode} $visible={!!originCountry}>
+          <TitleText isDarkMode={isDarkMode} $visible>
             {titles.header}
           </TitleText>
-          <SubTextContainer $visible={!!originCountry}>
+          <SubTextContainer $visible>
             <SubText>{titles.subHeader}</SubText>
           </SubTextContainer>
           <ActionsContainer>

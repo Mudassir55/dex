@@ -13,8 +13,8 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 process.env.REACT_APP_GIT_COMMIT_HASH = commitHash
 
-// Linting and type checking are only necessary as part of development and testing.
-// Omit them from production builds, as they slow down the feedback loop.
+// Type checking remains part of development. Linting is run separately via `yarn lint`;
+// running it inside webpack scans the full repository on every cold start.
 const shouldLintOrTypeCheck = !isProduction
 
 function getCacheDirectory(cacheName) {
@@ -24,7 +24,7 @@ function getCacheDirectory(cacheName) {
 
 module.exports = {
   eslint: {
-    enable: shouldLintOrTypeCheck,
+    enable: false,
     pluginOptions(eslintConfig) {
       return Object.assign(eslintConfig, {
         cache: true,
@@ -149,12 +149,14 @@ module.exports = {
       // This works by eliminating dead code, so that webpack can identify unused imports and tree-shake them;
       // it is only necessary for node_modules - it is done through linting for our own source code -
       // see https://medium.com/engineering-housing/dead-code-elimination-and-tree-shaking-at-housing-part-1-307a94b30f23#7e03:
-      webpackConfig.module.rules.push({
-        enforce: 'post',
-        test: /node_modules.*\.(js)$/,
-        loader: path.join(__dirname, 'scripts/terser-loader.js'),
-        options: { compress: true, mangle: false },
-      })
+      if (isProduction) {
+        webpackConfig.module.rules.push({
+          enforce: 'post',
+          test: /node_modules.*\.(js)$/,
+          loader: path.join(__dirname, 'scripts/terser-loader.js'),
+          options: { compress: true, mangle: false },
+        })
+      }
 
       // Configure webpack optimization:
       webpackConfig.optimization = Object.assign(

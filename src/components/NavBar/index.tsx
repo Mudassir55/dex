@@ -6,7 +6,6 @@ import { useInfoExplorePageEnabled } from 'featureFlags/flags/infoExplore'
 import { chainIdToBackendName } from 'graphql/data/util'
 import { useDisableNFTRoutes } from 'hooks/useDisableNFTRoutes'
 import { useIsNftPage } from 'hooks/useIsNftPage'
-import { useIsPoolsPage } from 'hooks/useIsPoolsPage'
 import { Box } from 'nft/components/Box'
 import { Row } from 'nft/components/Flex'
 import { EthereumIcon } from 'nft/components/icons'
@@ -57,7 +56,6 @@ export const PageTabs = () => {
   const { chainId: connectedChainId } = useWeb3React()
   const chainName = chainIdToBackendName(connectedChainId)
 
-  const isPoolActive = useIsPoolsPage()
   const isNftPage = useIsNftPage()
 
   const shouldDisableNFTRoutes = useDisableNFTRoutes()

@@ -23,9 +23,39 @@ export const UniIcon = (props: SVGProps) => (
 )
 
 export const EthereumIcon = (props: SVGProps) => (
-  <svg {...props} fill="#000000" width="48px" height="48px" viewBox="0 0 24 24" id="ethereum" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" className="icon line-color">
-    <polygon id="secondary" points="12 14.7 6 12 12 21 18 12 12 14.7" style={{fill: 'none', stroke: 'rgb(44, 169, 188)', strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: '2'}}></polygon>
-    <polygon id="primary" points="18 12 12 14.7 6 12 12 3 18 12" style={{fill: 'none', stroke: 'rgb(255, 255, 255)', strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: '2'}}></polygon>
+  <svg
+    {...props}
+    fill="#000000"
+    width="48px"
+    height="48px"
+    viewBox="0 0 24 24"
+    id="ethereum"
+    data-name="Line Color"
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon line-color"
+  >
+    <polygon
+      id="secondary"
+      points="12 14.7 6 12 12 21 18 12 12 14.7"
+      style={{
+        fill: 'none',
+        stroke: 'rgb(44, 169, 188)',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        strokeWidth: '2',
+      }}
+    ></polygon>
+    <polygon
+      id="primary"
+      points="18 12 12 14.7 6 12 12 3 18 12"
+      style={{
+        fill: 'none',
+        stroke: 'rgb(255, 255, 255)',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        strokeWidth: '2',
+      }}
+    ></polygon>
   </svg>
 )
 
@@ -34,7 +64,11 @@ export const ChevronUpIcon = ({
   secondaryWidth,
   secondaryHeight,
   ...props
-}: SVGProps & { secondaryWidth?: string; secondaryHeight?: string; secondaryColor?: string }) => (
+}: SVGProps & {
+  secondaryWidth?: string
+  secondaryHeight?: string
+  secondaryColor?: string
+}) => (
   <svg
     width={secondaryWidth || '29'}
     height={secondaryHeight || '28'}
