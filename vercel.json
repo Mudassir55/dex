@@ -1,5 +1,5 @@
 {
-  "installCommand": "yarn install --frozen-lockfile --ignore-optional",
+  "installCommand": "yarn install --frozen-lockfile",
   "buildCommand": "yarn build",
   "outputDirectory": "build",
   "rewrites": [
